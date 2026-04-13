@@ -143,7 +143,7 @@ export default function App() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${import.meta.env.sk-72cd27fe78e54aad82012afb9be4baed}`,
+          "Authorization": "Bearer " + import.meta.env.VITE_DEEPSEEK_API_KEY,
         },
         body: JSON.stringify({
           model: "deepseek-chat",
