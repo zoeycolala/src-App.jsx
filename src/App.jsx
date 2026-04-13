@@ -139,23 +139,21 @@ export default function App() {
   "keyword": "今日关键词（2-4字）"
 }`;
 
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch("https://api.deepseek.com/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": import.meta.env.VITE_ANTHROPIC_API_KEY,
-          "anthropic-version": "2023-06-01",
-          "anthropic-dangerous-direct-browser-access": "true",
+          "Authorization": `Bearer ${import.meta.env.sk-72cd27fe78e54aad82012afb9be4baed}`,
         },
         body: JSON.stringify({
-          model: "claude-haiku-4-5-20251001",
+          model: "deepseek-chat",
           max_tokens: 1000,
           messages: [{ role: "user", content: prompt }],
         }),
       });
 
       const data = await res.json();
-      const text = data.content.map(b => b.text || "").join("").replace(/```json|```/g, "").trim();
+      const text = (data.choices[0].message.content || "").replace(/```json|```/g, "").trim();
       const parsed = JSON.parse(text);
       setResult(parsed);
     } catch (e) {
